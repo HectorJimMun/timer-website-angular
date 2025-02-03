@@ -1,6 +1,16 @@
 <div class="card timer-card" style="width: 17rem; height: 17rem;">
     <div class="card-header timer-title">
-      {{timer.title}}
+        @if (!isEditing()) {
+            {{timer.title}}
+        }
+        @else {
+            <form [formGroup]="timerForm">
+                <input type="text" 
+                    formControlName="name" 
+                    maxlength="20"
+                    style="width: 16rem; border-radius: 5px; border: 1px solid black;"/>
+            </form>
+        }
     </div>
     <div class="card-body timer-data">
         @if (!isEditing()){

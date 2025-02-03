@@ -24,11 +24,11 @@ export class TimerComponent implements OnInit, OnDestroy {
 
     constructor(private formBuilder: FormBuilder) {
         this.timerForm = this.formBuilder.group({
+            name:     ['', Validators.required],
             hours:    [0, Validators.required],
             minutes:  [0, Validators.required],
             seconds:  [0, Validators.required]
         });
-        console.log(this.timerForm.controls['hours'].value);
     }
     
 
@@ -90,6 +90,7 @@ export class TimerComponent implements OnInit, OnDestroy {
 
         // Update the form to show the stored values
         if (edit) {
+            this.timerForm.controls['name'].setValue(this.timer.title);
             this.timerForm.controls['hours'].setValue(this.timer.originalHours);
             this.timerForm.controls['minutes'].setValue(this.timer.originalMinutes);
             this.timerForm.controls['seconds'].setValue(this.timer.originalSeconds);
@@ -139,6 +140,7 @@ export class TimerComponent implements OnInit, OnDestroy {
         // TODO: Check the values from the user input
 
         //console.log(this.alarmForm.value);
+        this.timer.title = this.timerForm.value['name'] as string;
         this.timer.originalHours = this.timerForm.value['hours'] as number;
         this.timer.originalMinutes = this.timerForm.value['minutes'] as number;
         this.timer.originalSeconds = this.timerForm.value['seconds'] as number;
