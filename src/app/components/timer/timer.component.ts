@@ -1,18 +1,18 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Timer } from '../../models/timer.model';
 
 @Component({
   selector: 'app-timer',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgClass],
   templateUrl: './timer.component.html',
   styleUrl: './timer.component.css'
 })
 export class TimerComponent implements OnInit, OnDestroy {
     private _onEdit: boolean = false;
-    private _intervalTimeOut = 10;
+    private _intervalTimeOut = 1000;
     public timer: Timer = new Timer();
     
     @Input({ required: true }) timerData!: Timer;
@@ -137,9 +137,41 @@ export class TimerComponent implements OnInit, OnDestroy {
     saveTimer(event: Event): void {
         event.preventDefault();
 
-        // TODO: Check the values from the user input
+        // Get values from user input
+        let allCorrect = true;
+        let inputTitle =  this.timerForm.value['name'] as string;
+        let inputHours =  this.timerForm.value['hours'] as number;
+        let inputMinutes =  this.timerForm.value['minutes'] as number;
+        let inputSeconds =  this.timerForm.value['seconds'] as number;
 
-        //console.log(this.alarmForm.value);
+        // Check range of values
+        if (inputHours < 0 || inputHours > 24) {
+            allCorrect = false;
+        }
+        if (inputMinutes < 0 || inputMinutes > 59) {
+            allCorrect = false;
+        }
+        if (inputSeconds < 0 || inputSeconds > 59) {
+            allCorrect = false;
+        }
+
+        // Check for valid data
+        if (inputTitle == '') {
+            allCorrect = false;
+        }
+        if (inputHours == null || inputMinutes == null || inputSeconds == null) {
+            allCorrect = false;
+        }
+
+        if (isNaN(inputHours) || isNaN(inputMinutes) || isNaN(inputSeconds)) {
+            allCorrect = false;
+        }
+
+        if (!allCorrect) {
+            return;
+        }
+
+        // Set the input values
         this.timer.title = this.timerForm.value['name'] as string;
         this.timer.originalHours = this.timerForm.value['hours'] as number;
         this.timer.originalMinutes = this.timerForm.value['minutes'] as number;
@@ -173,5 +205,42 @@ export class TimerComponent implements OnInit, OnDestroy {
         // Compute total seconds
         this.totalSeconds = (this.timer.originalHours * 60 * 60) + (this.timer.originalMinutes * 60) + (this.timer.originalSeconds);
         this.totalSecondsElapsed = 0;
+    }
+
+    /**
+    * Checks if the given field has range error or invalid data.
+    * @param {string} field Name of the field to check.
+    * @returns {boolean} True if the given field has the given error type. Otherwise, False.
+    */
+    hasErrors(field: string) {
+        let allCorrect: boolean = true;
+        let inputValue:any = (field == 'name')? this.timerForm.get(field)?.value as string : this.timerForm.get(field)?.value as number;
+
+        // Check title not empty
+        if (field == 'name' && inputValue == '') {
+            allCorrect = false;
+        }
+
+        // Check range of values
+        if (field == 'hours') {
+            if (inputValue < 0 || inputValue > 24) {
+                allCorrect = false;
+            }
+        }
+
+        if (field == 'minutes' || field == 'seconds') {
+            if (inputValue < 0 || inputValue > 59) {
+                allCorrect = false;
+            }
+        }
+
+        // Check valid data
+        if (field != 'name') {
+            if (inputValue == null || isNaN(inputValue)) {
+                allCorrect = false;
+            }
+        }
+
+        return this.timerForm.get(field)?.touched && !allCorrect;
     }
 }

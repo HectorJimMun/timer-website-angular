@@ -1,14 +1,17 @@
-<div class="card timer-card" style="width: 17rem; height: 17rem;">
+<div class="card timer-card" style="width: 24rem; height: 17rem;">
     <div class="card-header timer-title">
         @if (!isEditing()) {
             {{timer.title}}
         }
         @else {
             <form [formGroup]="timerForm">
-                <input type="text" 
+                <input class="form-control"
+                    type="text" 
                     formControlName="name" 
+                    minlength="1"
                     maxlength="20"
-                    style="width: 16rem; border-radius: 5px; border: 1px solid black;"/>
+                    style="width: 16rem;"
+                    [ngClass]="{'is-invalid': hasErrors('name')}"/>
             </form>
         }
     </div>
@@ -17,10 +20,19 @@
             {{timer.currentHours | number:'2.0-0'}} : {{timer.currentMinutes | number:'2.0-0'}} : {{timer.currentSeconds | number:'2.0-0'}}
         }
         @else {
-            <form [formGroup]="timerForm">
-                <input type="number" min="0" max="24" formControlName="hours"/> : 
-                <input type="number" min="0" max="59" formControlName="minutes"/> : 
-                <input type="number" min="0" max="59" formControlName="seconds"/>
+            <form [formGroup]="timerForm" class="row">
+                <input class="form-control" style="width: 95px;" 
+                    type="number" min="0" max="24" 
+                    formControlName="hours"
+                    [ngClass]="{'is-invalid': hasErrors('hours')}"/> : 
+                <input class="form-control" style="width: 95px;" 
+                    type="number" min="0" max="59" 
+                    formControlName="minutes"
+                    [ngClass]="{'is-invalid': hasErrors('minutes')}"/> : 
+                <input class="form-control" style="width: 95px;" 
+                    type="number" min="0" max="59" 
+                    formControlName="seconds"
+                    [ngClass]="{'is-invalid': hasErrors('seconds')}"/>
             </form>
         }
     </div>   
