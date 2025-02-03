@@ -28,7 +28,7 @@ export class TimerComponent implements OnInit, OnDestroy {
             minutes:  [0, Validators.required],
             seconds:  [0, Validators.required]
         });
-        console.log(this.timerForm.controls);
+        console.log(this.timerForm.controls['hours'].value);
     }
     
 
@@ -87,6 +87,13 @@ export class TimerComponent implements OnInit, OnDestroy {
 
     setEditing(edit: boolean) {
         this._onEdit = edit;
+
+        // Update the form to show the stored values
+        if (edit) {
+            this.timerForm.controls['hours'].setValue(this.timer.originalHours);
+            this.timerForm.controls['minutes'].setValue(this.timer.originalMinutes);
+            this.timerForm.controls['seconds'].setValue(this.timer.originalSeconds);
+        }
     }
 
     isActive() {
