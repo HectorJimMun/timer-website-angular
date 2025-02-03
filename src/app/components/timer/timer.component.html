@@ -1,0 +1,39 @@
+<div class="card timer-card" style="width: 17rem; height: 17rem;">
+    <div class="card-header timer-title">
+      {{timer.title}}
+    </div>
+    <div class="card-body timer-data">
+        @if (!isEditing()){
+            {{timer.currentHours | number:'2.0-0'}} : {{timer.currentMinutes | number:'2.0-0'}} : {{timer.currentSeconds | number:'2.0-0'}}
+        }
+        @else {
+            <form [formGroup]="timerForm">
+                <input type="number" min="0" max="24" formControlName="hours"/> : 
+                <input type="number" min="0" max="59" formControlName="minutes"/> : 
+                <input type="number" min="0" max="59" formControlName="seconds"/>
+            </form>
+        }
+    </div>   
+    <div class="card-footer text-body-secondary">
+        <div class="timer-actions">
+            @if (isEditing()) {
+                <form [formGroup]="timerForm" (submit)="saveTimer($event)">
+                    <button type="submit" class="btn btn-success action-btn">Save</button>
+                </form>
+                <button type="button" class="btn btn-warning action-btn" (click)="setEditing(false)">Cancel</button>
+                <button type="button" class="btn btn-danger action-btn">Remove</button>
+            }
+            @else {
+                @if (timer.active) {
+                    <button type="button" class="btn btn-primary action-btn" (click)="stopTimer()">Stop</button>
+                }
+                @else {
+                    <button type="button" class="btn btn-primary action-btn" (click)="startTimer()">Start</button>
+                }
+                @if (!timer.active) {
+                    <button type="button" class="btn btn-success action-btn" (click)="setEditing(true)">Edit</button>
+                }
+            }
+        </div>
+    </div>
+</div>

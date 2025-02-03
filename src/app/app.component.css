@@ -1,0 +1,9 @@
+.action-btn {
+    margin: 5px;
+}
+
+.alarm-actions-body {
+    display: flex;
+    vertical-align: center;
+    justify-content: center;
+}

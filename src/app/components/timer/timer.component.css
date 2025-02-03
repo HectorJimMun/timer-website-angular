@@ -1,0 +1,29 @@
+.timer-card {
+    margin: 10px;
+}
+
+.timer-actions {
+    display: flex;
+    vertical-align: center;
+    justify-content: center;
+}
+
+.timer-title {
+    text-decoration: underline;
+    font-size: 25px;
+    justify-content: center;
+    display: flex;
+    font-weight: bold;
+}
+
+.timer-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.action-btn {
+    margin: 5px;
+}
