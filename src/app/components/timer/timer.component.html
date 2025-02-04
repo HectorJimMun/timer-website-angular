@@ -43,7 +43,7 @@
                     <button type="submit" class="btn btn-success action-btn">Save</button>
                 </form>
                 <button type="button" class="btn btn-warning action-btn" (click)="setEditing(false)">Cancel</button>
-                <button type="button" class="btn btn-danger action-btn">Remove</button>
+                <button type="button" class="btn btn-danger action-btn" (click)="removeTimer(timer.id)">Remove</button>
             }
             @else {
                 @if (timer.active) {

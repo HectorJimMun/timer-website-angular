@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Timer } from './models/timer.model';
 import { TimerListComponent } from "./components/timer-list/timer-list.component";
+import { TimerServiceService } from './services/timer-service.service';
 
 @Component({
   selector: 'app-root',
@@ -12,31 +13,31 @@ import { TimerListComponent } from "./components/timer-list/timer-list.component
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
+    private _timerService = inject(TimerServiceService);
     timerList: Timer[] = [];
 
     ngOnInit(): void {
+        this.timerList = this._timerService.getTimers();
     }
 
-    createTimer() {
-        // Create timer
-        let timerId = Math.trunc(Math.random() * 100);
-        let hours =   Math.trunc(Math.random() * (24 - 0) + 0);
-        let minutes = Math.trunc(Math.random() * (59 - 0) + 0);
-        let seconds = Math.trunc(Math.random() * (59 - 0) + 0);
-    
-        var timer: Timer = {
-          id : timerId,
-          title : "Timer " + timerId,
-          originalHours: hours,
-          currentHours : hours,
-          originalMinutes: minutes,
-          currentMinutes : minutes,
-          originalSeconds: seconds,
-          currentSeconds : seconds,
-          active : false,
-          sound : "assets/sounds/sound_01.wav"
-        };
-    
-        this.timerList.push(timer);
+    // Calls the service to create a new timer
+    createTimer(): void {
+        this._timerService.createTimer();
+        this.timerList = this._timerService.getTimers();
+    }
+
+    /**
+     * Calls the service to remove the timer.
+     * @param {number} timerId ID of the timer to be removed.
+     */
+    removeTimer(timerId: number): void {
+        this._timerService.removeTimer(timerId);
+        this.ngOnInit();
+    }
+
+    // Calls the service to remove all the timers
+    removeAllTimers(): void {
+        this._timerService.removeAllTimers();
+        this.ngOnInit();
     }
 }

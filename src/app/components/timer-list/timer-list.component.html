@@ -1,8 +1,8 @@
 @if (timerList.length > 0) {
     <h2>Timers</h2>
     <div class="container responsive-grid">
-        @for (timer of timerList; track $index) {
-            <app-timer [timerData]="timer" />
+        @for (timer of timerList; track timer.id) {
+            <app-timer [timerData]="timer" (removeTimerEvent)="removeTimer($event)"/>
         }
     </div>
 }

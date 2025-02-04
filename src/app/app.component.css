@@ -7,3 +7,9 @@
     vertical-align: center;
     justify-content: center;
 }
+
+.alarm-actions-title {
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration: underline;
+}

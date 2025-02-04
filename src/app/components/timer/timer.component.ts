@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Timer } from '../../models/timer.model';
@@ -16,6 +16,7 @@ export class TimerComponent implements OnInit, OnDestroy {
     public timer: Timer = new Timer();
     
     @Input({ required: true }) timerData!: Timer;
+    @Output() removeTimerEvent = new EventEmitter<number>();
     public audio = new Audio();
     public interval?: any;
     timerForm!: FormGroup;
@@ -55,11 +56,13 @@ export class TimerComponent implements OnInit, OnDestroy {
         this.totalSecondsElapsed = 0;
     }
 
+    // Method triggered when the component is destroyed
     ngOnDestroy() {
         this.audio.pause();
         this.stopTimer();
     }
 
+    // Method to refresh the time data during the interval
     refreshData(){
         this.timer.currentSeconds -= 1;
         this.totalSecondsElapsed += 1;
@@ -76,15 +79,21 @@ export class TimerComponent implements OnInit, OnDestroy {
         if (this.totalSecondsElapsed == this.totalSeconds) {
             this.stopTimer();
             this.setActive(false);
+
             // Here we need to play the sound
-            //this.playSound();
+            this.playSound();
         }
     }
 
+    // Returns the edit state of the timer
     isEditing(): boolean {
         return this._onEdit;
     }
 
+    /**
+     * Sets the editing state of the timer.
+     * @param {boolean} edit Edit state.
+     */
     setEditing(edit: boolean) {
         this._onEdit = edit;
 
@@ -97,14 +106,20 @@ export class TimerComponent implements OnInit, OnDestroy {
         }
     }
 
-    isActive() {
+    // Returns the active state of the timer
+    isActive(): boolean {
         return this.timer.active;
     }
 
+    /**
+     * Sets the active state of the timer.
+     * @param {boolean} active State for the timer.
+     */
     setActive(active: boolean) {
         this.timer.active = active;
     }
 
+    // Resets the timer to the original status
     resetTimer(): void {
         this.timer.currentHours = this.timer.originalHours;
         this.timer.currentMinutes = this.timer.originalMinutes;
@@ -115,6 +130,7 @@ export class TimerComponent implements OnInit, OnDestroy {
         this.totalSecondsElapsed = 0;
     }
 
+    // Plays the timer
     startTimer() {
         // Restore original time
         this.resetTimer();
@@ -123,6 +139,7 @@ export class TimerComponent implements OnInit, OnDestroy {
         this.setActive(true);
     }
 
+    // Stops the timer
     stopTimer() {
         if (this.interval) {
             clearInterval(this.interval);
@@ -134,6 +151,10 @@ export class TimerComponent implements OnInit, OnDestroy {
         this.setActive(false);
     }
 
+    /**
+     * Saves the modifications done to the edited timer.
+     * @param {Event} event Event triggered.
+     */
     saveTimer(event: Event): void {
         event.preventDefault();
 
@@ -181,6 +202,7 @@ export class TimerComponent implements OnInit, OnDestroy {
         this.setEditing(false);
     }
 
+    // Plays the audio for the timer
     playSound() {
         this.audio.play();
     }
@@ -208,12 +230,21 @@ export class TimerComponent implements OnInit, OnDestroy {
     }
 
     /**
+     * Emits the ID of the timer to be removed and disabled the editing state.
+     * @param timerId ID of the timer to be removed.
+     */
+    removeTimer(timerId: number) {
+        this.setEditing(false);
+        this.removeTimerEvent.emit(timerId);
+    }
+
+    /**
     * Checks if the given field has range error or invalid data.
     * @param {string} field Name of the field to check.
     * @returns {boolean} True if the given field has the given error type. Otherwise, False.
     */
-    hasErrors(field: string) {
-        let allCorrect: boolean = true;
+    hasErrors(field: string): boolean {
+        var allCorrect: boolean = true;
         let inputValue:any = (field == 'name')? this.timerForm.get(field)?.value as string : this.timerForm.get(field)?.value as number;
 
         // Check title not empty
@@ -241,6 +272,6 @@ export class TimerComponent implements OnInit, OnDestroy {
             }
         }
 
-        return this.timerForm.get(field)?.touched && !allCorrect;
+        return (this.timerForm.get(field)?.touched as boolean) && !allCorrect;
     }
 }
