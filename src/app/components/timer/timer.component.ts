@@ -33,7 +33,7 @@ export class TimerComponent implements OnInit, OnDestroy {
     }
     
 
-    // Initialise the default values for the alarm
+    // Initialise the default values for the timer
     ngOnInit(): void {
         // Initialise the timer with the input data
         this.timer.id = this.timerData.id;

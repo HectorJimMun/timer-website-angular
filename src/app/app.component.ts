@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { Timer } from './models/timer.model';
 import { TimerListComponent } from "./components/timer-list/timer-list.component";
 import { TimerServiceService } from './services/timer-service.service';
+import { ClockComponent } from './components/clock/clock.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, TimerListComponent],
+  imports: [RouterOutlet, CommonModule, TimerListComponent, ClockComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
