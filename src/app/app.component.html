@@ -1,14 +1,15 @@
 <div class="container">
     <h1>Utilities</h1>   
-    <div class="card" style="width: 15rem; height: 15rem;">
-        <div class="card-header">
+    <div class="card" style="width: 15rem; height: 15rem; margin-top: 25px;">
+        <div class="card-header alarm-actions-title">
           Actions
         </div>
         <div class="card-body alarm-actions-body">
           <button type="button" class="btn btn-success action-btn" (click)="createTimer()">Create Timer</button>
+          <button type="button" class="btn btn-danger action-btn" (click)="removeAllTimers()">Remove All Timers</button>
         </div>
     </div>
-    <app-timer-list [timerListData]="timerList"/>
+    <app-timer-list [timerListData]="timerList" (removeTimerEvent)="removeTimer($event)"/>
 </div>
 
 <router-outlet />
