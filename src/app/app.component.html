@@ -1,12 +1,19 @@
 <div class="container">
-    <h1>Utilities</h1>   
-    <div class="card" style="width: 15rem; height: 15rem; margin-top: 25px;">
+    <div style="text-align: center; margin-top: 15px;">
+        <h1>Welcome to the Clock Page!</h1>
+        <p>In this page you will find some useful utilities for the clock. Enjoy!</p>
+    </div>
+
+    <app-clock style="display: flex; justify-content:center; align-items:center;"/>
+
+    <h1 style="margin-top: 25px;">Utilities</h1>
+    <div class="card" style="width: 15rem; height: 15rem; margin-top: 25px; margin-bottom: 25px;">
         <div class="card-header alarm-actions-title">
-          Actions
+            Actions
         </div>
         <div class="card-body alarm-actions-body">
-          <button type="button" class="btn btn-success action-btn" (click)="createTimer()">Create Timer</button>
-          <button type="button" class="btn btn-danger action-btn" (click)="removeAllTimers()">Remove All Timers</button>
+            <button type="button" class="btn btn-success action-btn" (click)="createTimer()">Create Timer</button>
+            <button type="button" class="btn btn-danger action-btn" (click)="removeAllTimers()">Remove All Timers</button>
         </div>
     </div>
     <app-timer-list [timerListData]="timerList" (removeTimerEvent)="removeTimer($event)"/>
