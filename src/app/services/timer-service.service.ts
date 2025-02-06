@@ -34,7 +34,7 @@ export class TimerServiceService {
             originalSeconds: seconds,
             currentSeconds : seconds,
             active : false,
-            sound : "assets/sounds/sound_01.wav"
+            sound : "assets/sounds/Buzzer.wav"
         };
 
         // Add the new timer to the list
