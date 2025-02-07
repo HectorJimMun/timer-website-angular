@@ -1,3 +1,4 @@
+<!--
 <div class="container">
     <div style="text-align: center; margin-top: 15px;">
         <h1>Welcome to the Clock Page!</h1>
@@ -20,3 +21,33 @@
 </div>
 
 <router-outlet />
+-->
+
+<div class="general-styles">
+    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Clock Website</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                    <a class="nav-link"
+                        routerLink=""
+                        [ngClass]="{active: menuOption == 'home'}"
+                        (click)="onOption('home')">Home</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link"
+                        routerLink="timers"
+                        [ngClass]="{active: menuOption == 'timers'}"
+                        (click)="onOption('timers')">Timers</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <router-outlet />
+</div>

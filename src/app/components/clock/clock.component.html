@@ -1,9 +1,17 @@
-<div class="card" style="width: 20rem; height: 15rem; margin-top: 25px;">
-    <div class="card-header clock-title">
-        System Clock
+<div class="container">
+    <div style="text-align: center; margin-top: 15px;">
+        <h1>Welcome to the Clock Page!</h1>
+        <p>In this page you will find some useful utilities for the clock. Enjoy!</p>
     </div>
-    <div class="card-body clock-body">
-        <p style="margin-top: 20px;">{{clock.hours | number:'2.0-0'}} : {{clock.minutes | number:'2.0-0'}} : {{clock.seconds | number:'2.0-0'}}</p>
-        <p style="margin-top: 20px;">{{clock.day | number:'2.0-0'}} / {{clock.month | number:'2.0-0'}} / {{clock.year}} </p>
+    <div style="display: flex; justify-content:center; align-items:center;">
+        <div class="card" style="width: 20rem; height: 15rem; margin-top: 25px;">
+            <div class="card-header clock-title">
+                System Clock
+            </div>
+            <div class="card-body clock-body">
+                <p style="margin-top: 20px;">{{clock.hours | number:'2.0-0'}} : {{clock.minutes | number:'2.0-0'}} : {{clock.seconds | number:'2.0-0'}}</p>
+                <p style="margin-top: 20px;">{{clock.day | number:'2.0-0'}} / {{clock.month | number:'2.0-0'}} / {{clock.year}} </p>
+            </div>
+        </div>
     </div>
 </div>
