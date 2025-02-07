@@ -5,11 +5,12 @@ import { Timer } from './models/timer.model';
 import { TimerListComponent } from "./components/timer-list/timer-list.component";
 import { TimerServiceService } from './services/timer-service.service';
 import { ClockComponent } from './components/clock/clock.component';
+import { ChronometerComponent } from './components/chronometer/chronometer.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, TimerListComponent, ClockComponent],
+  imports: [RouterOutlet, CommonModule, TimerListComponent, ClockComponent, ChronometerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

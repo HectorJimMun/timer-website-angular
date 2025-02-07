@@ -1,0 +1,17 @@
+<div class="card chrono-card" style="width: 24rem; height: 17rem;">
+    <div class="card-body chrono-data">
+        {{chrono.hours | number:'2.0-0'}} : {{chrono.minutes | number:'2.0-0'}} : {{chrono.seconds | number:'2.0-0'}}, {{chrono.milliseconds | number:'2.0-0'}}
+    </div>   
+    <div class="card-footer text-body-secondary">
+        <div class="chrono-actions">
+            @if (chrono.status == 0 || chrono.status == 2) {
+                <button type="button" class="btn btn-success action-btn" (click)="startChrono()">Start</button>
+            }
+            @else if (chrono.status == 1) {
+                <button type="button" class="btn btn-success action-btn" (click)="pauseChrono()">Pause</button>
+            }
+            <button type="button" class="btn btn-warning action-btn">Lap</button>
+            <button type="button" class="btn btn-danger action-btn" (click)="stopChrono()">Stop</button>
+        </div>
+    </div>
+</div>
